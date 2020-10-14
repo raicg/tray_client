@@ -26,7 +26,7 @@ module TrayClient
         request = Net::HTTP::Patch.new(uri) if type == :patch
         request = Net::HTTP::Delete.new(uri) if type == :delete
         request['content-type'] = 'application/json'
-        request['token'] = token
+        request['access_token'] = token
         request.body = "#{params.to_json}" if !params.blank?
         request
       end

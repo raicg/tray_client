@@ -56,6 +56,13 @@ module TrayClient
         params = {}
         TrayClient::Client.get(base_url, id.to_s, params, endpoint, query)
       end
+      
+      def delete(token, id)
+        endpoint = ''
+        query = { access_token: token }
+        params = {}
+        TrayClient::Client.delete(base_url, id.to_s, params, endpoint, query)
+      end
     end
   end
 end

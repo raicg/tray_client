@@ -15,10 +15,10 @@ module TrayClient
       end
 
       def url_endpoint(url = base_url, id = '', endpoint = '')
-        id.blank? ? URI(url+endpoint) : URI(url+"/"+id+endpoint)
+        id.blank? ? URI(url + endpoint) : URI(url + endpoint + '/' + id)
       end
 
-      def request(token, url = base_url, type = :get, id = '', params = {}, endpoint = '', query = {})
+      def request(url = base_url, type = :get, id = '', params = {}, endpoint = '', query = {})
         uri = url_endpoint(url, id, endpoint)
         uri.query = URI.encode_www_form(query)
         request = Net::HTTP::Get.new(uri) if type == :get
@@ -26,36 +26,36 @@ module TrayClient
         request = Net::HTTP::Patch.new(uri) if type == :patch
         request = Net::HTTP::Delete.new(uri) if type == :delete
         request['content-type'] = 'application/json'
-        request['access_token'] = token
-        request.body = "#{params.to_json}" if !params.blank?
+        request.body = "#{params.to_json}" unless params.blank?
         request
       end
 
-      def post(token, url = base_url, id = '', params = {}, endpoint = '', query = {})
-        request = request(token, url, :post, id, params, endpoint, query)
+      def post(url = base_url, id = '', params = {}, endpoint = '', query = {})
+        request = request(url, :post, id, params, endpoint, query)
         response = client.request(request).read_body
-        JSON.parse(response) if !response.nil?
+        JSON.parse(response) unless response.nil?
       end
 
-      def get(token, url = base_url, id = '', params = {}, endpoint = '', query = {})
-        request = request(token, url, :get, id, params, endpoint, query)
+      def get(url = base_url, id = '', params = {}, endpoint = '', query = {})
+        request = request(url, :get, id, params, endpoint, query)
         response = client.request(request).read_body
-        JSON.parse(response) if !response.nil?
+        JSON.parse(response) unless response.nil?
       end
 
-      def update(token, url = base_url, id = '', params = {}, endpoint = '', query = {})
-        request = request(token, url, :patch, id, params, endpoint, query)
+      def update(url = base_url, id = '', params = {}, endpoint = '', query = {})
+        request = request(url, :patch, id, params, endpoint, query)
         response = client.request(request).read_body
-        JSON.parse(response) if !response.nil?
+        JSON.parse(response) unless response.nil?
       end
 
-      def delete(token, url = base_url, id = '', params = {}, endpoint = '', query = {})
-        request = request(token, url, :delete, id, params, endpoint, query)
+      def delete(url = base_url, id = '', params = {}, endpoint = '', query = {})
+        request = request(url, :delete, id, params, endpoint, query)
         response = client.request(request).read_body
-        JSON.parse(response) if !response.nil?
+        JSON.parse(response) unless response.nil?
       end
 
       def base_url
+        return puts 'ERROR: YOU NEED TO SETUP THE ENV VAR: TRAY_API_BASE_URL !' if ENV['TRAY_API_BASE_URL'].nil?
         ENV['TRAY_API_BASE_URL'].gsub(/\/$/, '')
       end
     end

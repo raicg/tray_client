@@ -10,7 +10,7 @@ module TrayClient
         params = {}
         endpoint = ''
         query = { access_token: token }
-        TrayClient::Client.get(base_url, id, params, endpoint, query)
+        TrayClient::Client.get(base_url, id.to_s, params, endpoint, query)
       end
 
       def get_details(token, id)
@@ -20,26 +20,25 @@ module TrayClient
         TrayClient::Client.get(base_url, id.to_s, params, endpoint, query)
       end
 
-      def create(token, query = {})
+      def create(token, params)
         id = ''
-        params = {}
         endpoint = ''
-        query[access_token] = token
+        query = { access_token: token }
         TrayClient::Client.post(base_url, id.to_s, params, endpoint, query)
       end
 
-      def update(token, id, query = {})
-        params = {}
+      def update(token, id, params)
         endpoint = ''
-        query[access_token] = token
-        TrayClient::Client.update(base_url, id, params, endpoint, query)
+        query = { access_token: token }
+        TrayClient::Client.update(base_url, id.to_s, params, endpoint, query)
       end
 
       def delete(token, id)
+        params = {}
         endpoint = ''
         query = { access_token: token }
-        params = {}
         TrayClient::Client.delete(base_url, id.to_s, params, endpoint, query)
+      end
     end
   end
 end

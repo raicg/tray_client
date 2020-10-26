@@ -23,7 +23,7 @@ module TrayClient
         uri.query = URI.encode_www_form(query)
         request = Net::HTTP::Get.new(uri) if type == :get
         request = Net::HTTP::Post.new(uri) if type == :post
-        request = Net::HTTP::Patch.new(uri) if type == :patch
+        request = Net::HTTP::Put.new(uri) if type == :put
         request = Net::HTTP::Delete.new(uri) if type == :delete
         request['content-type'] = 'application/json'
         request.body = "#{params.to_json}" unless params.blank?
@@ -43,7 +43,7 @@ module TrayClient
       end
 
       def update(url = base_url, id = '', params = {}, endpoint = '', query = {})
-        request = request(url, :patch, id, params, endpoint, query)
+        request = request(url, :put, id, params, endpoint, query)
         response = client.request(request).read_body
         JSON.parse(response) unless response.nil?
       end

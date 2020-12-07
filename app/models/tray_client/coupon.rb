@@ -56,9 +56,43 @@ module TrayClient
         params = {}
         TrayClient::Client.get(base_url, id.to_s, params, endpoint, query)
       end
-      
+
+      def create(token, params)
+        id = ''
+        endpoint = ''
+        query = { access_token: token }
+        TrayClient::Client.post(base_url, id.to_s, params, endpoint, query)
+      end
+
+      def create_relationship(token, id, params)
+        id = ''
+        endpoint = '/create_relationship'
+        query = { access_token: token }
+        TrayClient::Client.post(base_url, id.to_s, params, endpoint, query)
+      end
+
+
+      def update(token, id, params)
+        endpoint = ''
+        query = { access_token: token }
+        TrayClient::Client.update(base_url, id.to_s, params, endpoint, query)
+      end
+
+      def update_relationship(token, id, params)
+        endpoint = '/create_relationship'
+        query = { access_token: token }
+        TrayClient::Client.update(base_url, id.to_s, params, endpoint, query)
+      end
+
       def delete(token, id)
         endpoint = ''
+        query = { access_token: token }
+        params = {}
+        TrayClient::Client.delete(base_url, id.to_s, params, endpoint, query)
+      end
+
+      def delete_relationship(token, id)
+        enpoint = delete_relationship
         query = { access_token: token }
         params = {}
         TrayClient::Client.delete(base_url, id.to_s, params, endpoint, query)

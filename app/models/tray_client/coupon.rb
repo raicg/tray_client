@@ -4,7 +4,7 @@ module TrayClient
   class Coupon < OpenStruct
     class << self
       def base_url
-        TrayClient::Client.base_url + '/discount_coupons'
+        "#{TrayClient::Client.base_url}/discount_coupons"
       end
 
       def get(token)

@@ -4,7 +4,7 @@ module TrayClient
   class Auth < OpenStruct
     class << self
       def base_url
-        TrayClient::Client.base_url + '/auth'
+        "#{TrayClient::Client.base_url}/auth"
       end
 
       def authenticate

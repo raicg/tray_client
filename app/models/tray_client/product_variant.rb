@@ -2,7 +2,7 @@ module TrayClient
   class ProductVariant < OpenStruct
     class << self
       def base_url
-        TrayClient::Client.base_url + '/products/variants'
+        "#{TrayClient::Client.base_url}/products/variants"
       end
 
       def get(token)
